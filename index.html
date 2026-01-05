@@ -7,30 +7,16 @@
 </head>
 <body>
 
-<h1>The Eternal Walker</h1>
-<p id="floor">階層: 1</p>
+  <h1>The Eternal Walker</h1>
 
-<div id="dungeon">
+  <p id="floor">階層: 1</p>
+  <p id="message"></p>
 
-  <div id="left">← 次の階層</div>
-
-  <div id="center">
-    <div id="monster">ドラゴン</div>
+  <div id="game">
+    <div id="player"></div>
   </div>
 
-  <div id="right">前の階層 →</div>
-
-  <!-- 通路 -->
-  <div id="road"></div>
-
-  <!-- プレイヤー -->
-  <div id="player">人</div>
-
-</div>
-
-<p id="message"></p>
-<p class="hint">← → キーで移動</p>
-
-<script src="script.js"></script>
+  <!-- ★ これが一番重要：bodyの一番下 -->
+  <script src="script.js"></script>
 </body>
 </html>
