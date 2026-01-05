@@ -1,11 +1,14 @@
+// ===== 基本設定 =====
 let floor = 1;
 const maxFloor = 3;
 
 const floorText = document.getElementById("floor");
-const monsterDiv = document.getElementById("monster");
+const message = document.getElementById("message");
 const playerDiv = document.getElementById("player");
+const monsterDiv = document.getElementById("monster");
 
-let playerX = 80; // 左右位置
+// プレイヤー左右位置
+let playerX = 90;
 
 // 階層ごとのモンスター（仮）
 const monsters = {
@@ -14,26 +17,36 @@ const monsters = {
   3: "ドラゴン"
 };
 
+// ===== 階層読み込み =====
 function loadFloor() {
   floorText.textContent = floor;
   monsterDiv.textContent = monsters[floor];
-  playerX = 80; // 階層移動時は中央に戻す
+  playerX = 90; // 中央に戻す
   updatePlayer();
 }
 
+// ===== プレイヤー表示更新 =====
 function updatePlayer() {
   playerDiv.style.left = playerX + "px";
 }
 
-// 左右キー操作
+// ===== キー操作 =====
 document.addEventListener("keydown", e => {
+  message.textContent = ""; // 毎回メッセージ消す
+
   if (e.key === "ArrowLeft") {
     playerX -= 10;
 
-    // 左端で次の階層へ
-    if (playerX < 0 && floor < maxFloor) {
-      floor++;
-      loadFloor();
+    // 左端チェック（次の階層）
+    if (playerX < 0) {
+      if (floor < maxFloor) {
+        floor++;
+        loadFloor();
+      } else {
+        message.textContent = "この先に階層はありません";
+        playerX = 0;
+        updatePlayer();
+      }
       return;
     }
   }
@@ -41,10 +54,16 @@ document.addEventListener("keydown", e => {
   if (e.key === "ArrowRight") {
     playerX += 10;
 
-    // 右端で前の階層へ
-    if (playerX > 160 && floor > 1) {
-      floor--;
-      loadFloor();
+    // 右端チェック（前の階層）
+    if (playerX > 180) {
+      if (floor > 1) {
+        floor--;
+        loadFloor();
+      } else {
+        message.textContent = "これ以上戻れません";
+        playerX = 180;
+        updatePlayer();
+      }
       return;
     }
   }
@@ -52,4 +71,5 @@ document.addEventListener("keydown", e => {
   updatePlayer();
 });
 
+// 初期表示
 loadFloor();
