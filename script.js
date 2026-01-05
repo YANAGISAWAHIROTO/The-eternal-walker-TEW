@@ -6,7 +6,7 @@ const floorText = document.getElementById("floor");
 const message = document.getElementById("message");
 
 let playerX = window.innerWidth / 2;
-const speed = 10;
+const speed = 15;
 
 function updatePlayer() {
   player.style.left = playerX + "px";
