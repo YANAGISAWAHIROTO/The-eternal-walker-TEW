@@ -2,23 +2,27 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>横階層ダンジョン</title>
+  <title>The Eternal Walker (TEW)</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<h1>The Eternal Walker</h1>
 <h2>階層: <span id="floor">1</span></h2>
+<p id="message"></p>
 
 <div id="dungeon">
-  <div id="left">次の階層</div>
+  <div id="left">← 次の階層</div>
 
   <div id="center">
-    <div id="player">人</div>
     <div id="monster">モンスター</div>
+    <div id="player">人</div>
   </div>
 
-  <div id="right">前の階層</div>
+  <div id="right">前の階層 →</div>
 </div>
+
+<p>← → キーで移動</p>
 
 <script src="script.js"></script>
 </body>
