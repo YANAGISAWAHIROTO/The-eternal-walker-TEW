@@ -4,9 +4,11 @@ const maxFloor = 3;
 const player = document.getElementById("player");
 const floorText = document.getElementById("floor");
 const message = document.getElementById("message");
+const game = document.getElementById("game");
 
-let playerX = window.innerWidth / 2;
+let playerX = game.clientWidth / 2;
 const speed = 15;
+const playerWidth = 40;
 
 function updatePlayer() {
   player.style.left = playerX + "px";
@@ -25,7 +27,7 @@ document.addEventListener("keydown", (e) => {
     if (playerX <= 0) {
       if (floor < maxFloor) {
         floor++;
-        playerX = window.innerWidth - 60;
+        playerX = game.clientWidth - playerWidth;
       } else {
         message.textContent = "これ以上先の階層はありません";
         playerX = 0;
@@ -36,13 +38,13 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowRight") {
     playerX += speed;
 
-    if (playerX >= window.innerWidth - 40) {
+    if (playerX >= game.clientWidth - playerWidth) {
       if (floor > 1) {
         floor--;
-        playerX = 20;
+        playerX = 0;
       } else {
         message.textContent = "これ以上戻れません";
-        playerX = window.innerWidth - 40;
+        playerX = game.clientWidth - playerWidth;
       }
     }
   }
