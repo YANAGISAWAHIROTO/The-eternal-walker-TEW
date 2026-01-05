@@ -2,22 +2,36 @@ body {
   margin: 0;
   background: black;
   color: white;
+  text-align: center;
   font-family: sans-serif;
 }
 
 #game {
   position: relative;
-  width: 100vw;
-  height: 200px;
-  background-image: url("road.png"); /* ← 今の構成に合ってる */
-  background-size: cover;
+  width: 80vw;
+  max-width: 600px;
+  height: 300px;
+  margin: 40px auto;
+  background: #222;
+  border: 2px solid #555;
   overflow: hidden;
 }
 
 #player {
   position: absolute;
   bottom: 20px;
-  width: 40px;
-  height: 40px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  background: lime;
+}
+
+#enemy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: red;
+  color: white;
+  padding: 10px;
 }
