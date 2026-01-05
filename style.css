@@ -11,7 +11,7 @@ body {
   width: 80vw;
   max-width: 600px;
   height: 300px;
-  margin: 40px auto;
+  margin: 30px auto;
   background: #222;
   border: 2px solid #555;
   overflow: hidden;
@@ -20,9 +20,8 @@ body {
 #player {
   position: absolute;
   bottom: 20px;
-  right: 20px;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   background: lime;
 }
 
@@ -34,4 +33,5 @@ body {
   background: red;
   color: white;
   padding: 10px;
-}
+  font-weight: bold;
+  }
