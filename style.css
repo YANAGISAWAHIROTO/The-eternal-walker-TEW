@@ -1,51 +1,49 @@
-body {
-  background: #111;
-  color: white;
-  text-align: center;
-  font-family: sans-serif;
-}
-
-#message {
-  height: 20px;
-  color: orange;
-}
-
 #dungeon {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
+  position: relative;
+  width: 100%;
+  height: 300px;
+  margin-top: 30px;
 }
 
 #left, #right {
+  position: absolute;
+  top: 40px;
   width: 120px;
   height: 220px;
   background: #333;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+}
+
+#left {
+  left: 0;
+}
+
+#right {
+  right: 0;
 }
 
 #center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   width: 220px;
   height: 220px;
   background: #222;
-  position: relative;
+}
+
+#monster {
+  margin-top: 20px;
+  background: red;
+  padding: 6px;
 }
 
 #player {
   position: absolute;
   bottom: 10px;
-  left: 90px;
+  left: 50%;
+  transform: translateX(-50%);
   background: lime;
-  padding: 6px;
-}
-
-#monster {
-  position: absolute;
-  top: 20px;
-  left: 60px;
-  background: red;
   padding: 6px;
 }
