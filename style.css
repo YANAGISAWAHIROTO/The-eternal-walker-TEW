@@ -1,43 +1,13 @@
-body {
-  margin: 0;
-  background: black;
-  color: white;
-  text-align: center;
-  font-family: sans-serif;
-}
-
-#game {
-  position: relative;
-
-  /* 画面端いっぱいに広げる */
-  width: 100vw;     /* 横幅：画面全体 */
-  height: 100vh;    /* 高さ：画面全体 */
-  
-  /* 背景画像 */
-  background-image: url("road.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  border: 2px solid #555; /* 好みで消せる */
-  overflow: hidden;
-}
-
 #player {
   position: absolute;
-  bottom: 20px;
   width: 40px;
   height: 40px;
-  background: lime;
-}
 
-#enemy {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255,0,0,0.8);
-  color: white;
-  padding: 10px;
-  font-weight: bold;
+  /* ★この値をレンガの上に乗る位置に */
+  bottom: 30px;   /* ← ここを調整 */
+  
+  background: lime;
+  border: 3px solid white;
+  box-shadow: 0 0 10px lime;
+  border-radius: 5px;
 }
