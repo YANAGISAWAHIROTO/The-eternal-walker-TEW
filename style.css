@@ -1,43 +1,54 @@
 body {
   margin: 0;
+  padding: 0;
   background: black;
   color: white;
   text-align: center;
   font-family: sans-serif;
 }
 
+/* ゲーム画面 */
 #game {
   position: relative;
-  width: 100vw;   /* 画面幅いっぱい */
-  height: 100vh;  /* 画面高さいっぱい */
-  background-image: url("road.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  width: 100vw;
+  height: 60vh;               /* ← 画面に収まる高さ */
+  margin: 0 auto;
   overflow: hidden;
+
+  /* 背景画像設定（ここが重要） */
+  background-image: url("road.png");
+  background-size: cover;     /* 画面全体にフィット */
+  background-position: center bottom;
+  background-repeat: no-repeat;
 }
 
+/* プレイヤー */
 #player {
   position: absolute;
   width: 40px;
   height: 40px;
+  bottom: 20px;               /* 道の上に乗る高さ */
+  left: 50%;
+  transform: translateX(-50%);
 
-  /* 道（レンガ）の上に乗せる */
-  bottom: 30px;
-  
   background: lime;
-  border: 3px solid white;
-  box-shadow: 0 0 10px lime;
-  border-radius: 5px;
+  border: 2px solid white;
+  border-radius: 6px;
 }
 
+/* 敵 */
 #enemy {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(255,0,0,0.8);
+  transform: translateX(-50%);
+  padding: 10px 16px;
+  background: darkred;
   color: white;
-  padding: 10px;
-  font-weight: bold;
+  border-radius: 6px;
+}
+
+#message {
+  color: yellow;
+  min-height: 1.5em;
 }
