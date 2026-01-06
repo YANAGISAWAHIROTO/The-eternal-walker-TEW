@@ -1,54 +1,59 @@
 body {
   margin: 0;
-  padding: 0;
   background: black;
   color: white;
   text-align: center;
   font-family: sans-serif;
 }
 
-/* ゲーム画面 */
+h1 {
+  margin: 16px 0 4px;
+}
+
+#floor {
+  margin: 4px 0;
+}
+
+#message {
+  height: 20px;
+  color: yellow;
+}
+
 #game {
   position: relative;
   width: 100vw;
-  height: 60vh;               /* ← 画面に収まる高さ */
+  height: calc(100vh - 140px);
   margin: 0 auto;
   overflow: hidden;
 
-  /* 背景画像設定（ここが重要） */
   background-image: url("road.png");
-  background-size: cover;     /* 画面全体にフィット */
+  background-size: contain;
   background-position: center bottom;
   background-repeat: no-repeat;
-}
-
-/* プレイヤー */
-#player {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  bottom: 20px;               /* 道の上に乗る高さ */
-  left: 50%;
-  transform: translateX(-50%);
-
-  background: lime;
-  border: 2px solid white;
-  border-radius: 6px;
 }
 
 /* 敵 */
 #enemy {
   position: absolute;
-  top: 40%;
+  top: 45%;
   left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 16px;
+  transform: translate(-50%, -50%);
   background: darkred;
-  color: white;
+  padding: 6px 12px;
   border-radius: 6px;
 }
 
-#message {
-  color: yellow;
-  min-height: 1.5em;
+/* プレイヤー（完成版） */
+#player {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+
+  /* ★ 石畳の上に来る位置 */
+  bottom: 80px;
+
+  background: lime;
+  border: 2px solid white;
+  box-shadow: 0 0 10px lime;
+  border-radius: 6px;
 }
