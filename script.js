@@ -53,6 +53,5 @@ document.addEventListener("keydown", (e) => {
   updateFloorText();
 });
 
-// 初期表示
 updatePlayer();
 updateFloorText();
