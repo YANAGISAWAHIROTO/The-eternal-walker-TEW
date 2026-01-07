@@ -9,12 +9,20 @@ const game = document.getElementById("game");
 const speed = 15;
 const playerWidth = 40;
 
-/* ===== 道の左右端（★ここが重要） =====
-   road.png の見た目に合わせて調整する */
-const ROAD_LEFT = 80;   // 左の端
-const ROAD_RIGHT = 80;  // 右の端
+/* ★ 背景画像の実際の横幅（px）
+   今の見た目だとだいたいこれくらい */
+const BACKGROUND_WIDTH = 900;
 
-let playerX = game.clientWidth / 2;
+/* 画面中央基準で背景の左右端を計算 */
+function getBackgroundBounds() {
+  const gameWidth = game.clientWidth;
+  const left = (gameWidth - BACKGROUND_WIDTH) / 2;
+  const right = left + BACKGROUND_WIDTH;
+  return { left, right };
+}
+
+/* 初期位置：背景の中央 */
+let playerX = (game.clientWidth - playerWidth) / 2;
 
 function updatePlayer() {
   player.style.left = playerX + "px";
@@ -27,38 +35,34 @@ function updateFloorText() {
 document.addEventListener("keydown", (e) => {
   message.textContent = "";
 
-  if (e.key === "ArrowLeft") {
-    player.classList.remove("right");
-    player.classList.add("left");
+  const bounds = getBackgroundBounds();
 
+  if (e.key === "ArrowLeft") {
     playerX -= speed;
 
-    /* 道の左端制限 */
-    if (playerX < ROAD_LEFT) {
+    /* 背景の左端チェック */
+    if (playerX < bounds.left) {
       if (floor < maxFloor) {
         floor++;
-        playerX = game.clientWidth - ROAD_RIGHT - playerWidth;
+        playerX = bounds.right - playerWidth;
       } else {
         message.textContent = "これ以上先の階層はありません";
-        playerX = ROAD_LEFT;
+        playerX = bounds.left;
       }
     }
   }
 
   if (e.key === "ArrowRight") {
-    player.classList.remove("left");
-    player.classList.add("right");
-
     playerX += speed;
 
-    /* 道の右端制限 */
-    if (playerX > game.clientWidth - ROAD_RIGHT - playerWidth) {
+    /* 背景の右端チェック */
+    if (playerX + playerWidth > bounds.right) {
       if (floor > 1) {
         floor--;
-        playerX = ROAD_LEFT;
+        playerX = bounds.left;
       } else {
         message.textContent = "これ以上戻れません";
-        playerX = game.clientWidth - ROAD_RIGHT - playerWidth;
+        playerX = bounds.right - playerWidth;
       }
     }
   }
