@@ -9,11 +9,9 @@ const game = document.getElementById("game");
 const speed = 15;
 const playerWidth = 40;
 
-/* ★ 背景画像の実際の横幅（px）
-   今の見た目だとだいたいこれくらい */
+/* 背景画像の横幅 */
 const BACKGROUND_WIDTH = 900;
 
-/* 画面中央基準で背景の左右端を計算 */
 function getBackgroundBounds() {
   const gameWidth = game.clientWidth;
   const left = (gameWidth - BACKGROUND_WIDTH) / 2;
@@ -21,8 +19,11 @@ function getBackgroundBounds() {
   return { left, right };
 }
 
-/* 初期位置：背景の中央 */
+/* 初期位置 */
 let playerX = (game.clientWidth - playerWidth) / 2;
+
+/* 初期向き */
+player.classList.add("right");
 
 function updatePlayer() {
   player.style.left = playerX + "px";
@@ -34,13 +35,15 @@ function updateFloorText() {
 
 document.addEventListener("keydown", (e) => {
   message.textContent = "";
-
   const bounds = getBackgroundBounds();
 
   if (e.key === "ArrowLeft") {
+    /* ★ 向き変更 */
+    player.classList.remove("right");
+    player.classList.add("left");
+
     playerX -= speed;
 
-    /* 背景の左端チェック */
     if (playerX < bounds.left) {
       if (floor < maxFloor) {
         floor++;
@@ -53,9 +56,12 @@ document.addEventListener("keydown", (e) => {
   }
 
   if (e.key === "ArrowRight") {
+    /* ★ 向き変更 */
+    player.classList.remove("left");
+    player.classList.add("right");
+
     playerX += speed;
 
-    /* 背景の右端チェック */
     if (playerX + playerWidth > bounds.right) {
       if (floor > 1) {
         floor--;
