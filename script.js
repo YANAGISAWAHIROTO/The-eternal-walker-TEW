@@ -9,8 +9,13 @@ const game = document.getElementById("game");
 const speed = 15;
 const playerWidth = 40;
 
-/* 背景画像の横幅 */
+/* 背景画像の横幅（road.png に合わせる） */
 const BACKGROUND_WIDTH = 900;
+
+/* 歩行アニメ用 */
+let walkFrame = 0;
+let walking = false;
+const BASE_BOTTOM = 80; // CSSの bottom と同じ値
 
 function getBackgroundBounds() {
   const gameWidth = game.clientWidth;
@@ -25,20 +30,34 @@ let playerX = (game.clientWidth - playerWidth) / 2;
 /* 初期向き */
 player.classList.add("right");
 
+/* 表示更新 */
 function updatePlayer() {
   player.style.left = playerX + "px";
+
+  /* ★ 歩行アニメ（上下1px） */
+  if (walking) {
+    walkFrame++;
+    const offset = walkFrame % 2 === 0 ? 0 : 2;
+    player.style.bottom = BASE_BOTTOM + offset + "px";
+  } else {
+    player.style.bottom = BASE_BOTTOM + "px";
+  }
 }
 
 function updateFloorText() {
   floorText.textContent = "階層: " + floor;
 }
 
+/* キー操作 */
 document.addEventListener("keydown", (e) => {
   message.textContent = "";
   const bounds = getBackgroundBounds();
+  walking = false;
 
   if (e.key === "ArrowLeft") {
-    /* ★ 向き変更 */
+    walking = true;
+
+    /* 向き */
     player.classList.remove("right");
     player.classList.add("left");
 
@@ -56,7 +75,9 @@ document.addEventListener("keydown", (e) => {
   }
 
   if (e.key === "ArrowRight") {
-    /* ★ 向き変更 */
+    walking = true;
+
+    /* 向き */
     player.classList.remove("left");
     player.classList.add("right");
 
@@ -75,6 +96,12 @@ document.addEventListener("keydown", (e) => {
 
   updatePlayer();
   updateFloorText();
+});
+
+/* キーを離したら停止 */
+document.addEventListener("keyup", () => {
+  walking = false;
+  updatePlayer();
 });
 
 /* 初期表示 */
