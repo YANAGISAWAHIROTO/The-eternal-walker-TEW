@@ -9,14 +9,42 @@ const game = document.getElementById("game");
 const speed = 15;
 const playerWidth = 40;
 
-/* 背景画像の横幅（road.png に合わせる） */
+/* 背景幅（road.pngに合わせる） */
 const BACKGROUND_WIDTH = 900;
 
-/* 歩行アニメ用 */
+/* 歩行アニメ */
 let walkFrame = 0;
 let walking = false;
-const BASE_BOTTOM = 80; // CSSの bottom と同じ値
+const BASE_BOTTOM = 80;
 
+/* ===== SE（足音） ===== */
+const footstep = new Audio("footstep.mp3");
+footstep.volume = 0.4;
+let stepCooldown = false;
+
+/* ===== フェード暗転 ===== */
+const fade = document.createElement("div");
+fade.style.position = "fixed";
+fade.style.top = 0;
+fade.style.left = 0;
+fade.style.width = "100%";
+fade.style.height = "100%";
+fade.style.background = "black";
+fade.style.opacity = 0;
+fade.style.pointerEvents = "none";
+fade.style.transition = "opacity 0.4s";
+fade.style.zIndex = 9999;
+document.body.appendChild(fade);
+
+function fadeOutIn(callback) {
+  fade.style.opacity = 1;
+  setTimeout(() => {
+    callback();
+    fade.style.opacity = 0;
+  }, 400);
+}
+
+/* 背景制限 */
 function getBackgroundBounds() {
   const gameWidth = game.clientWidth;
   const left = (gameWidth - BACKGROUND_WIDTH) / 2;
@@ -26,19 +54,23 @@ function getBackgroundBounds() {
 
 /* 初期位置 */
 let playerX = (game.clientWidth - playerWidth) / 2;
-
-/* 初期向き */
 player.classList.add("right");
 
-/* 表示更新 */
 function updatePlayer() {
   player.style.left = playerX + "px";
 
-  /* ★ 歩行アニメ（上下1px） */
   if (walking) {
     walkFrame++;
     const offset = walkFrame % 2 === 0 ? 0 : 2;
     player.style.bottom = BASE_BOTTOM + offset + "px";
+
+    /* 足音 */
+    if (!stepCooldown) {
+      footstep.currentTime = 0;
+      footstep.play();
+      stepCooldown = true;
+      setTimeout(() => (stepCooldown = false), 250);
+    }
   } else {
     player.style.bottom = BASE_BOTTOM + "px";
   }
@@ -48,7 +80,7 @@ function updateFloorText() {
   floorText.textContent = "階層: " + floor;
 }
 
-/* キー操作 */
+/* ===== キー操作 ===== */
 document.addEventListener("keydown", (e) => {
   message.textContent = "";
   const bounds = getBackgroundBounds();
@@ -56,17 +88,16 @@ document.addEventListener("keydown", (e) => {
 
   if (e.key === "ArrowLeft") {
     walking = true;
-
-    /* 向き */
     player.classList.remove("right");
     player.classList.add("left");
-
     playerX -= speed;
 
     if (playerX < bounds.left) {
       if (floor < maxFloor) {
-        floor++;
-        playerX = bounds.right - playerWidth;
+        fadeOutIn(() => {
+          floor++;
+          playerX = bounds.right - playerWidth;
+        });
       } else {
         message.textContent = "これ以上先の階層はありません";
         playerX = bounds.left;
@@ -76,17 +107,16 @@ document.addEventListener("keydown", (e) => {
 
   if (e.key === "ArrowRight") {
     walking = true;
-
-    /* 向き */
     player.classList.remove("left");
     player.classList.add("right");
-
     playerX += speed;
 
     if (playerX + playerWidth > bounds.right) {
       if (floor > 1) {
-        floor--;
-        playerX = bounds.left;
+        fadeOutIn(() => {
+          floor--;
+          playerX = bounds.left;
+        });
       } else {
         message.textContent = "これ以上戻れません";
         playerX = bounds.right - playerWidth;
@@ -98,7 +128,7 @@ document.addEventListener("keydown", (e) => {
   updateFloorText();
 });
 
-/* キーを離したら停止 */
+/* 停止 */
 document.addEventListener("keyup", () => {
   walking = false;
   updatePlayer();
