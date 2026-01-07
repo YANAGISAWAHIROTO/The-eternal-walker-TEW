@@ -33,7 +33,7 @@ h1 {
   background-repeat: no-repeat;
 }
 
-/* 敵 */
+/* 敵（仮） */
 #enemy {
   position: absolute;
   top: 45%;
@@ -78,4 +78,24 @@ h1 {
   background: white;
   right: 9px;
   top: 10px;
+}
+
+/* ===== 向きによる目の位置 ===== */
+
+/* 右向き */
+#player.right::before {
+  left: 11px;
+}
+
+#player.right::after {
+  right: 7px;
+}
+
+/* 左向き */
+#player.left::before {
+  left: 5px;
+}
+
+#player.left::after {
+  right: 13px;
 }
