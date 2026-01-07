@@ -1,3 +1,50 @@
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+h1 {
+  margin: 16px 0 4px;
+}
+
+#floor {
+  margin: 4px 0;
+}
+
+#message {
+  height: 20px;
+  color: yellow;
+}
+
+/* ゲーム画面（背景） */
+#game {
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - 140px);
+  margin: 0 auto;
+  overflow: hidden;
+
+  background-image: url("road.png");
+  background-size: contain;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+}
+
+/* 敵 */
+#enemy {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: darkred;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+/* プレイヤー本体 */
 #player {
   position: absolute;
   width: 40px;
@@ -8,7 +55,6 @@
   border: 2px solid white;
   border-radius: 4px;
 
-  /* ドット感 */
   image-rendering: pixelated;
 }
 
@@ -32,4 +78,4 @@
   background: white;
   right: 9px;
   top: 10px;
-  }
+}
