@@ -9,18 +9,21 @@ const game = document.getElementById("game");
 const speed = 15;
 const playerWidth = 40;
 
-/* 背景幅（road.pngに合わせる） */
+/* 背景画像の横幅（road.pngに合わせる） */
 const BACKGROUND_WIDTH = 900;
 
-/* 歩行アニメ */
+/* ===== 歩行アニメ ===== */
 let walkFrame = 0;
 let walking = false;
 const BASE_BOTTOM = 80;
 
-/* ===== SE（足音） ===== */
+/* ===== 足音SE ===== */
 const footstep = new Audio("footstep.mp3");
 footstep.volume = 0.4;
 let stepCooldown = false;
+
+/* ★ 音声アンロック用（重要） */
+let audioUnlocked = false;
 
 /* ===== フェード暗転 ===== */
 const fade = document.createElement("div");
@@ -44,7 +47,7 @@ function fadeOutIn(callback) {
   }, 400);
 }
 
-/* 背景制限 */
+/* 背景の左右端を計算 */
 function getBackgroundBounds() {
   const gameWidth = game.clientWidth;
   const left = (gameWidth - BACKGROUND_WIDTH) / 2;
@@ -54,8 +57,11 @@ function getBackgroundBounds() {
 
 /* 初期位置 */
 let playerX = (game.clientWidth - playerWidth) / 2;
+
+/* 初期向き */
 player.classList.add("right");
 
+/* 表示更新 */
 function updatePlayer() {
   player.style.left = playerX + "px";
 
@@ -65,9 +71,9 @@ function updatePlayer() {
     player.style.bottom = BASE_BOTTOM + offset + "px";
 
     /* 足音 */
-    if (!stepCooldown) {
+    if (!stepCooldown && audioUnlocked) {
       footstep.currentTime = 0;
-      footstep.play();
+      footstep.play().catch(() => {});
       stepCooldown = true;
       setTimeout(() => (stepCooldown = false), 250);
     }
@@ -83,13 +89,22 @@ function updateFloorText() {
 /* ===== キー操作 ===== */
 document.addEventListener("keydown", (e) => {
   message.textContent = "";
+
+  /* ★ 最初のキー入力で音を解禁 */
+  if (!audioUnlocked) {
+    footstep.play().catch(() => {});
+    audioUnlocked = true;
+  }
+
   const bounds = getBackgroundBounds();
   walking = false;
 
   if (e.key === "ArrowLeft") {
     walking = true;
+
     player.classList.remove("right");
     player.classList.add("left");
+
     playerX -= speed;
 
     if (playerX < bounds.left) {
@@ -107,8 +122,10 @@ document.addEventListener("keydown", (e) => {
 
   if (e.key === "ArrowRight") {
     walking = true;
+
     player.classList.remove("left");
     player.classList.add("right");
+
     playerX += speed;
 
     if (playerX + playerWidth > bounds.right) {
@@ -128,7 +145,7 @@ document.addEventListener("keydown", (e) => {
   updateFloorText();
 });
 
-/* 停止 */
+/* キーを離したら停止 */
 document.addEventListener("keyup", () => {
   walking = false;
   updatePlayer();
