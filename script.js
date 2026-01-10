@@ -9,13 +9,13 @@ const game = document.getElementById("game");
 const speed = 15;
 const playerWidth = 40;
 
-/* ★ 1階層の長さ（画面の3倍） */
-const WORLD_WIDTH = game.clientWidth * 3;
+/* 1階層の長さ（px） */
+const WORLD_WIDTH = 3000;
 
-/* プレイヤー位置（世界） */
+/* 世界座標 */
 let worldX = WORLD_WIDTH / 2;
 
-/* カメラ位置 */
+/* カメラ */
 let cameraX = 0;
 
 /* 歩行 */
@@ -34,16 +34,13 @@ function updateFloorText() {
 }
 
 function updateCamera() {
-  /* カメラはプレイヤーを中央に追従 */
   cameraX = worldX - game.clientWidth / 2;
-
-  /* カメラの端制限 */
   cameraX = Math.max(0, Math.min(cameraX, WORLD_WIDTH - game.clientWidth));
 
-  /* 背景を動かす */
+  /* 背景スクロール */
   game.style.backgroundPositionX = -cameraX + "px";
 
-  /* プレイヤーの画面上の位置 */
+  /* プレイヤー画面位置 */
   const screenX = worldX - cameraX;
   player.style.left = screenX + "px";
 }
@@ -51,7 +48,6 @@ function updateCamera() {
 function updatePlayer() {
   if (walking) {
     walkFrame++;
-
     const offset = walkFrame % 2 === 0 ? 0 : 2;
     player.style.bottom = BASE_BOTTOM + offset + "px";
 
@@ -93,23 +89,13 @@ document.addEventListener("keydown", (e) => {
 
   /* 世界の端 */
   if (worldX < 0) {
-    if (floor < maxFloor) {
-      floor++;
-      worldX = WORLD_WIDTH - playerWidth;
-    } else {
-      worldX = 0;
-      message.textContent = "これ以上先はありません";
-    }
+    worldX = 0;
+    message.textContent = "これ以上戻れません";
   }
 
   if (worldX > WORLD_WIDTH - playerWidth) {
-    if (floor > 1) {
-      floor--;
-      worldX = 0;
-    } else {
-      worldX = WORLD_WIDTH - playerWidth;
-      message.textContent = "これ以上戻れません";
-    }
+    worldX = WORLD_WIDTH - playerWidth;
+    message.textContent = "これ以上先はありません";
   }
 
   updatePlayer();
