@@ -10,7 +10,7 @@ const speed = 15;
 const playerWidth = 40;
 
 /* ★ 1階層の長さ（画面の3倍） */
-const WORLD_WIDTH = game.clientWidth * 6;
+const WORLD_WIDTH = game.clientWidth * 3;
 
 /* プレイヤー位置（世界） */
 let worldX = WORLD_WIDTH / 2;
