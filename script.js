@@ -1,20 +1,18 @@
 const player = document.getElementById("player");
 
-let x = 50; // 画面中央（%）
-const speed = 2;
+let x = 50; // 中央スタート（%）
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft") {
-    x -= speed;
-    if (x < 5) x = 5;
-    player.style.left = x + "%";
+    x -= 2;
     player.classList.add("left");
   }
-
   if (e.key === "ArrowRight") {
-    x += speed;
-    if (x > 95) x = 95;
-    player.style.left = x + "%";
+    x += 2;
     player.classList.remove("left");
   }
+
+  // 画面外防止
+  x = Math.max(5, Math.min(95, x));
+  player.style.left = x + "%";
 });
