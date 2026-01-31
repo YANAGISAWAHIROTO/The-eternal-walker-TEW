@@ -8,7 +8,7 @@ body {
 
 /* タイトル */
 h1 {
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 /* ダンジョン全体 */
@@ -21,30 +21,34 @@ h1 {
   overflow: hidden;
 }
 
-/* 通路 */
+/* 通路（中央・大きめ） */
 #road {
   position: absolute;
-  bottom: 0;
+  top: 50%;
   left: 0;
+  transform: translateY(-50%);
+
   width: 100%;
-  height: 96px;
+  height: 160px;
 
   background-image: url("images/road.png");
   background-repeat: repeat-x;
   background-size: auto 100%;
 
   image-rendering: pixelated;
+  z-index: 1;
 }
 
-/* プレイヤー */
+/* プレイヤー（親指サイズ） */
 #player {
   position: absolute;
-  bottom: 32px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
 
-  width: 64px;
-  height: 64px;
+  width: 88px;
+  height: 88px;
+
+  transform: translate(-50%, -50%);
 
   background-image: url("images/player.png");
   background-size: contain;
@@ -55,47 +59,14 @@ h1 {
   z-index: 10;
 }
 
-/* 左向き（左右反転） */
+/* 左向き */
 #player.left {
-  transform: translateX(-50%) scaleX(-1);
+  transform: translate(-50%, -50%) scaleX(-1);
 }
-
-/* モンスターエリア */
-#center {
-  position: absolute;
-  top: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 220px;
-  height: 220px;
-  background: #222;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* モンスター */
-#monster {
-  color: red;
-  font-weight: bold;
-}
-
-/* 左右階層 */
-#left, #right {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #333;
-  padding: 10px;
-  opacity: 0.8;
-}
-
-#left { left: 0; }
-#right { right: 0; }
 
 /* ヒント */
 .hint {
-  opacity: 0.6;
-  font-size: 14px;
   margin-top: 10px;
-    }
+  font-size: 14px;
+  opacity: 0.6;
+  }
